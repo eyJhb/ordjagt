@@ -1,0 +1,951 @@
+@font-face {
+  font-family: 'AachenBoldPlain';
+  src: url('/fonts/AachenBoldPlain.eot?#iefix') format('embedded-opentype'),  url('/fonts/AachenBoldPlain.woff') format('woff'), url('/fonts/AachenBoldPlain.ttf')  format('truetype'), url('/fonts/AachenBoldPlain.svg#AachenBoldPlain') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SignaColumn-Black';
+  src: url('/fonts/SignaColumn-Black.eot?#iefix') format('embedded-opentype'),  url('/fonts/SignaColumn-Black.woff') format('woff'), url('/fonts/SignaColumn-Black.ttf')  format('truetype'), url('/fonts/SignaColumn-Black.svg#SignaColumn-Black') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'SignaColumn-Bold';
+  src: url('/fonts/SignaColumn-Bold.eot?#iefix') format('embedded-opentype'),  url('/fonts/SignaColumn-Bold.woff') format('woff'), url('/fonts/SignaColumn-Bold.ttf')  format('truetype'), url('/fonts/SignaColumn-Bold.svg#SignaColumn-Bold') format('svg');
+  font-weight: normal;
+  font-style: normal;}
+
+@font-face {
+  font-family: 'SignaColumn-Book';
+  src: url('/fonts/SignaColumn-Book.eot?#iefix') format('embedded-opentype'),  url('/fonts/SignaColumn-Book.woff') format('woff'), url('/fonts/SignaColumn-Book.ttf')  format('truetype'), url('/fonts/SignaColumn-Book.svg#SignaColumn-Book') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SignaColumn-Light';
+  src: url('/fonts/SignaColumn-Light.eot?#iefix') format('embedded-opentype'),  url('/fonts/SignaColumn-Light.woff') format('woff'), url('/fonts/SignaColumn-Light.ttf')  format('truetype'), url('/fonts/SignaColumn-Light.svg#SignaColumn-Light') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SignaOT-BoldIta';
+  src: url('/fonts/SignaOT-BoldIta.eot?#iefix') format('embedded-opentype'),  url('/fonts/SignaOT-BoldIta.otf')  format('opentype'),
+	     url('/fonts/SignaOT-BoldIta.woff') format('woff'), url('/fonts/SignaOT-BoldIta.ttf')  format('truetype'), url('/fonts/SignaOT-BoldIta.svg#SignaOT-BoldIta') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'helium-serialbold';
+    src: url('/fonts/helium_serial_bold-webfont.eot');
+    src: url('/fonts/helium_serial_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/helium_serial_bold-webfont.woff2') format('woff2'),
+         url('/fonts/helium_serial_bold-webfont.woff') format('woff'),
+         url('/fonts/helium_serial_bold-webfont.ttf') format('truetype'),
+         url('/fonts/helium_serial_bold-webfont.svg#helium-serialbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'helium-serial-mediumregular';
+    src: url('/fonts/helium_serial_medium_regular-webfont.eot');
+    src: url('/fonts/helium_serial_medium_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/helium_serial_medium_regular-webfont.woff2') format('woff2'),
+         url('/fonts/helium_serial_medium_regular-webfont.woff') format('woff'),
+         url('/fonts/helium_serial_medium_regular-webfont.ttf') format('truetype'),
+         url('/fonts/helium_serial_medium_regular-webfont.svg#helium-serial-mediumregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+#ajaxLoader {
+    position: absolute;
+    z-index: 1001;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    background-color: #441d53;
+}
+
+iframe {
+    width: 100%;
+    height: 300px;
+}
+
+#popup {
+    position: absolute;
+    left: 50%;
+    background-color: rgba(0, 0, 0, .8);
+    z-index: 1000;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    color: white;
+}
+
+#popup img {
+    width: 27px;
+    height: auto;
+}
+
+#popup h1 {
+    padding: 0px;
+    margin: 0px;
+    font-family: helium-serial-mediumregular;
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+#popup p {
+    padding: 0px;
+    margin: 0px;
+    font-family: SignaColumn-Light;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+input[type="text"] {
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    font-family: SignaColumn-Book;
+    font-size: 20px;
+    color: #3a3a3a;
+    outline: none;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.checkbox {
+    border-radius: 5px;
+    background-color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+}
+
+.checkbox.selected {
+    background-image: url(/images/checkmark.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#outerFrame {
+    max-width: 414px;
+    background-image: url(/images/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    margin: 0 auto;
+    position: relative;
+    -webkit-box-shadow: 0px 6px 20px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 6px 20px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 6px 20px 0px rgba(0,0,0,0.75);
+}
+
+#outerFrame.blue-background {
+    background-image: url(/images/bg-blue.jpg);
+    background-position: center center;
+    background-size: cover;
+}
+
+#innerFrame {
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    color: white;
+    text-align: center;
+    -webkit-transition: height .5s;
+    -moz-transition: height .5s;
+    -o-transition: height .5s;
+    transition: height .5s;
+}
+
+#innerFrame .button {
+    font-family: helium-serialbold;
+    text-shadow: 1px 1px 0px rgba(254, 243, 37, 1);
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid #fcbb28;
+    color: #5c1866;
+    font-size: 27px;
+    width: 80%;
+    height: 47px;
+    line-height: 43px;
+    cursor: pointer;
+    outline: none;
+    background: #ffd22e;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top, #ffd22e 0%, #f7941d 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffd22e), color-stop(100%,#f7941d));
+    background: -webkit-linear-gradient(top, #ffd22e 0%,#f7941d 100%);
+    background: -o-linear-gradient(top, #ffd22e 0%,#f7941d 100%);
+    background: -ms-linear-gradient(top, #ffd22e 0%,#f7941d 100%);
+    background: linear-gradient(to bottom, #ffd22e 0%,#f7941d 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd22e', endColorstr='#f7941d',GradientType=0 );
+}
+
+#frontpage .headline {
+    font-family: helium-serial-mediumregular;
+    font-size: 55px;
+    margin-bottom: 10px;
+    line-height: 60px;
+}
+
+#frontpage p {
+    padding: 0px;
+    margin: 0px;
+    font-family: helium-serial-mediumregular;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+#frontpage #frontpageSplash {
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    height: auto;
+}
+
+#highscorePage #ordjagtLogo,
+#phonenumber #ordjagtLogo,
+#seePrices #ordjagtLogo,
+#howToPlay #ordjagtLogo {
+    width: 100%;
+    height: auto;
+}
+
+#phonenumber .bold {
+    font-family: SignaColumn-Bold;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#phonenumber .book {
+    font-family: SignaColumn-Book;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#phonenumber .checkbox,
+#signup .checkbox {
+    float: left;
+}
+
+#phonenumber #phoneConditions {
+    font-family: SignaColumn-Book;
+    font-size: 18px;
+    color: white;
+    float: left;
+    margin-left: 10px;
+    margin-top: 9px;
+}
+
+#phonenumber #phoneConditions a,
+#signup #signupConditions a {
+    color: white;
+}
+
+#phonenumber #phoneForm input[type="text"] {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+#phonenumber #phoneForm input[type="button"] {
+    margin-top: 20px;
+}
+
+#phonenumber #seePrices,
+#howToPlay #seePrices,
+#afterGame #seePrices {
+    font-family: helium-serial-mediumregular;
+    margin-top: 15px;
+    font-size: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#seePrices #headline,
+#howToPlay #headline {
+    font-family: helium-serial-mediumregular;
+    font-size: 35px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+#seePrices #steps {
+    font-family: SignaColumn-Book;
+    font-size: 16px;
+    line-height: 18px;
+}
+
+#seePrices img {
+    width: 191px;
+    height: auto;
+    margin-top: 10px;
+}
+
+#seePrices #readConditions {
+    font-family: SignaColumn-Book;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#seePrices #readConditions span {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#howToPlay .book {
+    font-family: SignaColumn-Book;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+}
+
+#howToPlay .book p {
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 10px;
+}
+
+#howToPlay .bold {
+    font-family: SignaColumn-Bold;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+}
+
+#howToPlay .button {
+    margin-top: 10px;
+}
+
+.tutorial {
+    position: relative;
+}
+
+.tutorial .close {
+    width: 27px;
+    height: auto;
+    position: absolute;
+    top: 6px;
+    left: 0px;
+}
+
+.tutorial #headline {
+    font-family: helium-serial-mediumregular;
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.tutorial .guide {
+    width: 100%;
+    height: auto;
+}
+
+.tutorial .guideText {
+    font-family: SignaColumn-Book;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    margin-bottom: 15px;
+    background-color: rgba(0, 0, 0, .2);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+#afterGame {
+    position: relative;
+}
+
+#afterGame #headline {
+    font-family: helium-serial-mediumregular;
+    font-size: 75px;
+    margin-bottom: -5px;
+}
+
+#afterGame #headline.noMargin {
+    margin-bottom: 10px;
+}
+
+#afterGame.thankYou #headline {
+    font-size: 55px;
+    line-height: 55px;
+    margin-bottom: 30px;
+}
+
+#afterGame.thankYou p {
+    font-family: helium-serial-mediumregular;
+    font-size: 22px;
+}
+
+#afterGame #subHeadline {
+    font-family: helium-serial-mediumregular;
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+#afterGame.thankYou #subHeadline {
+    margin-bottom: 30px;
+}
+
+
+#afterGame.tryAgain #headline {
+    font-size: 50px;
+}
+
+#afterGame .subtitle {
+    font-family: helium-serial-mediumregular;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #fcbb28;
+}
+
+#afterGame .subtitle em {
+    font-style: normal;
+    font-size: 90px;
+    display: block;
+    font-family: helium-serialbold;
+}
+
+#afterGame #prices {
+    font-family: helium-serial-mediumregular;
+    font-size: 32px;
+    margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, .2);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+#afterGame #prices em,
+#afterGame #noticeLarge em,
+#afterGame #noticeMedium em {
+    font-style: normal;
+    color: #fcbb28;
+}
+
+#afterGame #noticeLarge {
+    font-family: helium-serial-mediumregular;
+    font-size: 32px;
+    background-color: rgba(0, 0, 0, .2);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#afterGame #noticeMedium {
+    font-family: helium-serial-mediumregular;
+    font-size: 28px;
+    background-color: rgba(0, 0, 0, .2);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#afterGame #noticeSmall,
+#howToPlay #noticeSmall,
+#tutorial4 #noticeSmall {
+    font-family: helium-serial-mediumregular;
+    font-size: 22px;
+    background-color: rgba(0, 0, 0, .2);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#howToPlay #noticeSmall,
+#tutorial4 #noticeSmall {
+    margin-top: 10px;
+    font-size: 20px;
+    margin-bottom: 0px;
+}
+
+#afterGame #noticeSmall span {
+    font-size: 32px;
+}
+
+#afterGame .largeButton {
+    font-family: helium-serialbold;
+    text-shadow: 1px 1px 0px rgba(254, 243, 37, 1);
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid #fcbb28;
+    color: #5c1866;
+    font-size: 27px;
+    width: 80%;
+    height: auto;
+    white-space: normal;
+    line-height: 30px;
+    cursor: pointer;
+    outline: none;
+    background: #ffd22e;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top, #ffd22e 0%, #f7941d 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffd22e), color-stop(100%,#f7941d));
+    background: -webkit-linear-gradient(top, #ffd22e 0%,#f7941d 100%);
+    background: -o-linear-gradient(top, #ffd22e 0%,#f7941d 100%);
+    background: -ms-linear-gradient(top, #ffd22e 0%,#f7941d 100%);
+    background: linear-gradient(to bottom, #ffd22e 0%,#f7941d 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd22e', endColorstr='#f7941d',GradientType=0 );
+    margin-bottom: 10px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+}
+
+#afterGame .largeButton.height {
+    height: 80px;
+    line-height: 63px;
+}
+
+#afterGame .button.smallText,
+#highscorePage .button.smallText,
+#howToPlay .button.smallText {
+    font-size: 20px;
+    white-space: normal;
+    height: auto;
+    line-height: 23px;
+    padding-top: 5px;
+    margin-bottom: 10px;
+}
+
+#afterGame .button.withMargin,
+#howToPlay .button.withMargin {
+    margin-bottom: 10px;
+}
+
+#innerFrame .facebookButton {
+    font-family: helium-serialbold;
+    text-shadow: 1px 1px 0px rgba(144, 176, 231, 1);
+    border-radius: 5px;
+    border: 2px solid #5f81be;
+    margin: 0 auto;
+    color: white;
+    font-size: 22px;
+    width: 80%;
+    height: 47px;
+    line-height: 47px;
+    cursor: pointer;
+    outline: none;
+    background-color: #496ca7;
+    position: relative;
+    text-align: left;
+    padding-left: 58px;
+    box-sizing: border-box;
+}
+
+#innerFrame .facebookButton img {
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    height: 35px;
+    width: auto;
+}
+
+#innerFrame .facebookButton {
+    display: none;
+}
+
+#afterGame .arrows {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    left: 0px;
+    top: 250px;
+}
+
+#afterGame .arrows.faded {
+    display: none;
+}
+
+#afterGame #arrowRight {
+    left: auto;
+    right: 0px;
+}
+
+#signup p {
+    font-family: SignaColumn-Book;
+}
+
+
+#signup .headline {
+    font-family: helium-serial-mediumregular;
+    font-size: 45px;
+    margin-bottom: 10px;
+    line-height: 60px;
+}
+
+#signup #formImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+#signup input[type="text"] {
+    text-align: left;
+    padding-left: 15px;
+    margin-bottom: 10px;
+}
+
+#signup #signupConditions {
+    font-family: SignaColumn-Book;
+    font-size: 15px;
+    color: white;
+    float: left;
+    text-align: left;
+    width: calc(100% - 60px);
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+#signupForm {
+    margin-bottom: 20px;
+}
+
+#frontpage .headline {
+    font-family: helium-serial-mediumregular;
+    font-size: 55px;
+    margin-bottom: 10px;
+    line-height: 60px;
+}
+
+#highscorePage .headline {
+    font-family: helium-serial-mediumregular;
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+#highscorePage .subtitle {
+    font-family: helium-serial-mediumregular;
+    font-size: 35px;
+    margin-bottom: 15px;
+    color: #fbb125;
+}
+
+#highscorePage p {
+    font-family: helium-serial-mediumregular;
+    font-size: 28px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+#highscorePage #scores {
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+#highscorePage #scores ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#highscorePage #scores ol li {
+    display: block;
+    position: relative;
+    height: 60px;
+    padding: 0 0;
+    line-height: 60px;
+    font-size: 25px;
+    font-family: helium-serial-mediumregular;
+}
+
+#highscorePage #scores ol li.active {
+    color: #fbb125;
+}
+
+#highscorePage #scores ol li.active:before {
+    border-color: #fbb125;
+}
+
+#highscorePage #scores ol li:before {
+    content: '...';
+    display: block;
+    position: absolute;
+    top: 34px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-bottom: 2px dotted #fff;
+    font-size: 0;
+    text-indent: 4000px;
+    overflow: hidden;
+}
+
+#highscorePage #scores ol li span {
+    position: relative;
+    z-index: 2;
+    display: block;
+    background: #3f1e4c;
+    padding: 0 10px;
+}
+
+#highscorePage #scores ol li span.left {
+    float: left;
+    padding-left: 25px;
+}
+
+#highscorePage #scores ol li span.right {
+    float: right;
+    padding-right: 25px;
+    font-weight: bold;
+    min-width: 1px;
+    min-height: 60px;
+}
+
+#highscorePage #scores ol.current-user {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: #fbb125;
+}
+
+#highscorePage #scores ol.current-user li:before {
+    border-color: #fbb125;
+}
+
+/* #highscorePage #scores ol.current-user li:first-child {
+    height: auto;
+    line-height: 1.3em;
+}
+
+#highscorePage #scores ol.current-user li:first-child:before {
+    content: "";
+    display: none;
+}
+
+#highscorePage #scores ol.current-user li:first-child p {
+    margin: 0;
+    padding-left: 25px;
+    text-align: left;
+} */
+
+ul.tabs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0;
+    background: rgba(63, 30, 76, .7);
+}
+
+ul.tabs li {
+    display: inline-block;
+    min-width: 49%;
+    padding: 20px 0;
+    font-family: helium-serialbold;
+    font-size: 27px;
+    color: #fff;
+    text-transform: uppercase;
+    position: relative;
+    border-right: 2px solid #7e4487;
+}
+
+ul.tabs li:last-child {
+    border-right: 0 none;
+}
+
+ul.tabs li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+ul.tabs li.active  a {
+    color: #fbb125;
+}
+
+.tabs-content {
+}
+
+.tabs-content .content {
+    display: none;
+    background: #3f1e4c;
+    border-radius: 9px;
+}
+
+.tabs-content .content.active {
+    display: block;
+}
+
+.flat-link {
+    font-family: helium-serial-mediumregular;
+    margin-top: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#qoj_popup {
+    position: relative;
+    font-family: helium-serial-mediumregular;
+    margin-top: 20px;
+}
+
+#qoj_popup .qoj-popup-close {
+    display: block;
+    position: absolute;
+    width: 37px;
+    height: 37px;
+    top: -18px;
+    right: -18px;
+    font-size: 0;
+    line-height: 0;
+    text-indent: 4000px;
+    overflow: hidden;
+    background-image: url(../images/popup-close.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+#qoj_popup .qoj-popup-inner {
+    display: none;
+    border-radius: 9px;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+#qoj_popup .qoj-popup-inner.active {
+    display: block;
+}
+
+#qoj_popup h2.popup-title {
+    font-size: 60px;
+    text-transform: uppercase;
+}
+
+#qoj_popup h3.popup-title {
+    font-size: 35px;
+}
+
+#qoj_popup h4.popup-title {
+    font-size: 25px;
+}
+
+#popup_congrats {
+    background-image: url(../images/background-light.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+}
+
+#popup_congrats h2.popup-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+
+#popup_congrats h3.popup-title {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    font-weight: normal;
+}
+
+#popup_congrats p {
+    font-size: 20px;
+}
+
+#popup_congrats .secret-word {
+    display: block;
+    margin-bottom: 50px;
+    border-radius: 9px;
+    background-color: #fff;
+    color: #7e4487;
+    font-size: 40px;
+    line-height: 55px;
+    text-transform: uppercase;
+}
+
+#popup_congrats .button {
+    display: block;
+    margin: 0 auto 30px;
+    font-family: helium-serialbold;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .6);
+    border: 0 none;
+    border-radius: 10px;
+    font-size: 22px;
+    width: auto;
+    height: auto;
+    line-height: 43px;
+    cursor: pointer;
+    outline: none;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+    background: #6a3772; /* Old browsers */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzZhMzc3MiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzZjFlNGMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #6a3772 0%, #3f1e4c 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6a3772), color-stop(100%,#3f1e4c)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #6a3772 0%,#3f1e4c 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #6a3772 0%,#3f1e4c 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #6a3772 0%,#3f1e4c 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #6a3772 0%,#3f1e4c 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6a3772', endColorstr='#3f1e4c',GradientType=0 ); /* IE6-8 */
+}
+
+#popup_word_list {
+    background: #3f1e4c;
+    
+}
+
+#popup_word_list h3.popup-title {
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+
+#popup_word_list h4.popup-title {
+    font-weight: normal;
+    color: #fcbb28;
+}
+
+#popup_word_list .word-list-container {
+    background: #522f60;
+    padding: 10px;
+    margin-bottom: 20px;
+    max-height: 350px;
+    overflow: auto;
+}
+
+#popup_word_list .word-list-container ol {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#popup_word_list .word-list-container ol li {
+    display: block;
+    padding: 3px 0;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 22px;
+    line-height: 1.3em;
+    font-family: helium-serial-mediumregular;
+}
+
+#popup_word_list .word-list-container ol li span {
+    float: right;
+}

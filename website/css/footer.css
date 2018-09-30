@@ -1,0 +1,38 @@
+#outerFooterFrame {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+#innerFooterFrame {
+    width: 100%;
+    height: 49px;
+    background-color: #7e4487;
+    border-radius: 5px;
+}
+
+#innerFooterFrame #danskespilLogo {
+    float: left;
+}
+
+#innerFooterFrame #quickLogo {
+    float: right;
+}
+
+#innerFooterFrame .footerLogo {
+    height: 49px;
+    width: auto;
+}
+
+#outerFooterFrame #copyright {
+    float: right;
+    font-family: SignaOT-BoldIta;
+    font-size: 9px;
+    color: white;
+    margin-top: 7px;
+    margin-right: 10px;
+}
