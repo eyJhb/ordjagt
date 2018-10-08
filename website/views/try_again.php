@@ -1,6 +1,8 @@
 <div id="afterGame" class="tryAgain">
+    <!--
     <img id="arrowLeft" class="arrows faded" src="/images/arrow_left.png" />
     <img id="arrowRight" class="arrows" src="/images/arrow_right.png" onclick="ga('send', 'event', 'Ads', 'View', 'Ad1'); initPage('ad1');" />
+    -->
     <div id="headline" class="noMargin">
         TAK FOR SPILLET!
     </div>
