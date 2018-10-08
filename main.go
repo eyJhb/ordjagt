@@ -1,106 +1,35 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"strconv"
-
 	"html/template"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/schema"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
+
+var decoder = schema.NewDecoder()
 
 type OrdjagtConfig struct {
 	Name          string
 	EncryptionKey string
 }
 
-type user struct {
-	name       string
-	highscores *[]int
-}
-
-type highscore struct {
-	Name  string
-	Score int
-}
-
 type ordjagt struct {
-	conf       *OrdjagtConfig
-	scoreBoard map[int]highscore
-	users      map[string]user
+	Conf       *OrdjagtConfig
+	ScoreBoard map[int]*Score
+	Users      map[string]*User
 
 	viewsIndexTmpl       *template.Template
 	viewsHowToPlayTmpl   *template.Template
 	viewsTryAgainTmpl    *template.Template
 	viewsHighscoreTmpl   *template.Template
 	viewsGameTmpl        *template.Template
+	viewsSignupTmpl      *template.Template
 	viewsPhonenumberTmpl *template.Template
-}
-
-type viewsTryAgain struct {
-	Score          int
-	PersonalRecord int
-	TriesLeft      int
-}
-
-type viewsHighscore struct {
-	Highscores map[int]highscore
-}
-
-type viewsGame struct {
-	Seed string
-}
-
-func (o *ordjagt) addScore(userId string, score int) {
-	log.Debug().Msg("addScore")
-
-	// check if user exists
-	if _, present := o.users[userId]; present == false {
-		o.users[userId] = user{name: userId, highscores: &[]int{}}
-	}
-
-	high := *o.users[userId].highscores
-	high = append(high, score)
-
-	log.Debug().Msg("addScore: added personal score")
-
-	for i := 9; i >= 0; i-- {
-		log.Debug().Int("i", i).Msg("addScore: looping")
-		if score > o.scoreBoard[i].Score {
-			if i == 9 {
-				o.scoreBoard[i] = highscore{Name: userId, Score: score}
-			} else {
-				o.scoreBoard[i+1] = highscore{Name: o.scoreBoard[i].Name, Score: o.scoreBoard[i].Score}
-				o.scoreBoard[i] = highscore{Name: userId, Score: score}
-			}
-		}
-	}
-
-	fmt.Println(o.scoreBoard)
-}
-
-func (o *ordjagt) ajaxGameOver(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	log.Debug().Msg("ajax.GameOver")
-
-	for k, v := range r.Form {
-		fmt.Printf("%s = %s\n", k, v)
-	}
-
-	score, _ := strconv.Atoi(r.Form["score"][0])
-	mobile := r.Form["mobile"][0]
-	o.addScore(mobile, score)
-
-	fmt.Fprintf(w, "try_again")
-}
-
-func (o *ordjagt) ajaxRedirectTo(w http.ResponseWriter, r *http.Request) {
-	// fmt.Fprintf(w, `{"error": false, "tries_left": 1}`)
-	fmt.Fprintf(w, `{"tries_left": 3}`)
 }
 
 func serveStatic(r *mux.Router, dir, path string) {
@@ -113,64 +42,6 @@ func serveStatic(r *mux.Router, dir, path string) {
 	r.PathPrefix(path).Handler(http.StripPrefix(path, fs))
 }
 
-func (o *ordjagt) viewsIndex(w http.ResponseWriter, r *http.Request) {
-	log.Debug().Msg("view.index")
-	o.viewsIndexTmpl.Execute(w, "")
-}
-
-func (o *ordjagt) viewsTryAgain(w http.ResponseWriter, request *http.Request) {
-	log.Debug().Msg("view.tryAgain")
-
-	data := viewsTryAgain{
-		Score:          1,
-		PersonalRecord: 99999,
-		TriesLeft:      0,
-	}
-
-	o.viewsTryAgainTmpl.Execute(w, data)
-}
-
-func (o *ordjagt) viewsGame(w http.ResponseWriter, request *http.Request) {
-	log.Debug().Msg("view.game")
-
-	data := viewsGame{
-		Seed: "d07bc074d5#e8e4edf4e0931e2a747b3606fe41e8e40d451d07",
-	}
-
-	o.viewsGameTmpl.Execute(w, data)
-}
-
-func (o *ordjagt) viewsPhonenumber(w http.ResponseWriter, r *http.Request) {
-	log.Debug().Msg("view.phonenumber")
-	o.viewsPhonenumberTmpl.Execute(w, "")
-}
-
-func (o *ordjagt) viewsHighscore(w http.ResponseWriter, request *http.Request) {
-	log.Debug().Msg("view.highscore")
-
-	data := viewsHighscore{
-		Highscores: o.scoreBoard,
-	}
-
-	o.viewsHighscoreTmpl.Execute(w, data)
-}
-
-func (o *ordjagt) viewsHowToPlay(w http.ResponseWriter, request *http.Request) {
-	log.Debug().Msg("view.howToPlay")
-
-	o.viewsHowToPlayTmpl.Execute(w, "")
-}
-
-func (o *ordjagt) ajaxSaveMobile(w http.ResponseWriter, r *http.Request) {
-	log.Debug().Msg("ajax.saveMobile")
-
-	r.ParseForm()
-	mobile := r.Form["mobile"][0]
-	o.users[mobile] = user{name: mobile, highscores: &[]int{}}
-
-	fmt.Fprintf(w, "true")
-}
-
 func (o *ordjagt) Run() {
 	log.Debug().Msg("Running ordjagt!")
 	http.ListenAndServe(":5000", nil)
@@ -178,8 +49,8 @@ func (o *ordjagt) Run() {
 
 func New(conf OrdjagtConfig) (*ordjagt, error) {
 	s := &ordjagt{
-		conf: &conf,
-		scoreBoard: map[int]highscore{
+		Conf: &conf,
+		ScoreBoard: map[int]*Score{
 			0: {Name: "-", Score: 0},
 			1: {Name: "-", Score: 0},
 			2: {Name: "-", Score: 0},
@@ -191,14 +62,17 @@ func New(conf OrdjagtConfig) (*ordjagt, error) {
 			8: {Name: "-", Score: 0},
 			9: {Name: "-", Score: 0},
 		},
-		users:                make(map[string]user),
+		Users:                map[string]*User{},
 		viewsIndexTmpl:       template.Must(template.ParseFiles("./website/index.html")),
 		viewsHowToPlayTmpl:   template.Must(template.ParseFiles("./website/views/how_to_play.php")),
 		viewsTryAgainTmpl:    template.Must(template.ParseFiles("./website/views/try_again.php")),
 		viewsHighscoreTmpl:   template.Must(template.ParseFiles("./website/views/highscore.php")),
 		viewsGameTmpl:        template.Must(template.ParseFiles("./website/views/game.php")),
+		viewsSignupTmpl:      template.Must(template.ParseFiles("./website/views/signup.php")),
 		viewsPhonenumberTmpl: template.Must(template.ParseFiles("./website/views/phonenumber.php")),
 	}
+
+	s.AddScore("88888888", 10)
 
 	r := mux.NewRouter()
 	// serveStatic(r, "./website/ajax", "/ajax/")
