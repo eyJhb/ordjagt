@@ -13,5 +13,6 @@
             Accepterer du disse betingelser der ikke er <a href="#ikkeher">her</a>?
         </div>
         <input class="button" type="button" value="TILMELD" onclick="submitSignupForm()" />
+    <input class="button" type="button" value="TILBAGE" onclick="initPage('try_again')" />
     </form>
 </div>

@@ -19,10 +19,13 @@
             Forsøg tilbage i dag: <em>{{.TriesLeft}}</em>
         </div>
         <input class="largeButton" type="button" value="SPIL IGEN" onclick="initPage('game');" />
-    
-            <input class="button smallText" type="button" value="TILMELD DIG KONKURRENCEN" onclick="initPage('signup');" />
+        {{if .ShowSignup}}
+        <input class="button smallText" type="button" value="TILMELD DIG KONKURRENCEN" onclick="initPage('signup');" />
+        {{end}}
         <input class="button smallText withMargin" type="button" value="SE HIGHSCORE (TOP 10)" onclick="initPage('highscore');" />
+    <!--
     <div id="seePrices" onclick="initPage('see_prices');">
         SE PRÆMIER HER
     </div>
+    -->
 </div>

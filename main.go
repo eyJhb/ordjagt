@@ -72,8 +72,6 @@ func New(conf OrdjagtConfig) (*ordjagt, error) {
 		viewsPhonenumberTmpl: template.Must(template.ParseFiles("./website/views/phonenumber.php")),
 	}
 
-	s.AddScore("88888888", 10)
-
 	r := mux.NewRouter()
 	// serveStatic(r, "./website/ajax", "/ajax/")
 
@@ -81,18 +79,21 @@ func New(conf OrdjagtConfig) (*ordjagt, error) {
 	r.HandleFunc("/ajax/save_mobile.php", s.ajaxSaveMobile)
 	r.HandleFunc("/ajax/game_over.php", s.ajaxGameOver)
 	r.HandleFunc("/ajax/redirect_to.php", s.ajaxRedirectTo)
+	r.HandleFunc("/ajax/save_main_competition.php", s.ajaxSignup)
 	r.HandleFunc("/views/views_how_to_play.php", s.viewsHowToPlay)
 	r.HandleFunc("/views/try_again.php", s.viewsTryAgain)
 	r.HandleFunc("/views/highscore.php", s.viewsHighscore)
 	r.HandleFunc("/views/game.php", s.viewsGame)
 	r.HandleFunc("/views/phonenumber.php", s.viewsPhonenumber)
+	r.HandleFunc("/views/how_to_play.php", s.viewsHowToPlay)
+	r.HandleFunc("/views/signup.php", s.viewsSignup)
 
 	serveStatic(r, "./website/css", "/css/")
 	serveStatic(r, "./website/fonts", "/fonts/")
 	serveStatic(r, "./website/game", "/game/")
 	serveStatic(r, "./website/images", "/images/")
 	serveStatic(r, "./website/js", "/js/")
-	serveStatic(r, "./website/views", "/views/")
+	// serveStatic(r, "./website/views", "/views/")
 
 	http.Handle("/", r)
 	return s, nil

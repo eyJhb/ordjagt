@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	valid "github.com/asaskevich/govalidator"
 	"github.com/rs/zerolog/log"
@@ -26,6 +27,18 @@ type GameOver struct {
 	GameSeed string `json:"sd" valid:"required,length(51|51)"`
 	Hash     string `json:"sh" valid:"required,length(40|40)"`
 	Words    []Word `json:"w"`
+}
+
+type Signup struct {
+	Mobile    string `json:"mobile" valid:"required,numeric,length(8|8)"`
+	Firstname string `json:"firstname" valid:"required,length(2|10)"`
+	Surname   string `json:"surname" valid:"required,length(2|15)"`
+	Email     string `json:"email" valid:"required,email"`
+}
+
+type AjaxReponse struct {
+	Success bool     `json:"success"`
+	Errors  []string `json:"errors"`
 }
 
 func (o *ordjagt) ajaxGameOver(w http.ResponseWriter, r *http.Request) {
@@ -59,10 +72,72 @@ func (o *ordjagt) ajaxGameOver(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	o.AddScore(req.Userid, req.Score)
+	o.UserAddScore(req.Userid, req.Score)
 
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, `{"page": "try_again"}`)
+}
+
+func (o *ordjagt) ajaxSignup(w http.ResponseWriter, r *http.Request) {
+	log.Debug().Msg("ajax.Signup")
+
+	w.Header().Set("Content-Type", "application/json")
+
+	var req Signup
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		log.Error().
+			Err(err).
+			Msg("ajax.Signup: could not decode received json")
+		res := AjaxReponse{
+			Success: false,
+			Errors:  []string{"Forkert json data sendt"},
+		}
+		resJson, _ := json.Marshal(res)
+		fmt.Fprintf(w, string(resJson))
+		return
+	}
+
+	result, err := valid.ValidateStruct(req)
+	if err != nil {
+		log.Error().
+			Err(err).
+			Msg("ajax.Signup: Failed validation")
+		res := AjaxReponse{
+			Success: false,
+			Errors:  strings.Split(err.Error(), ";"),
+		}
+		resJson, _ := json.Marshal(res)
+		fmt.Fprintf(w, string(resJson))
+		return
+	}
+
+	if result == false {
+		log.Error().
+			Msg("ajax.Signup: Failed validation")
+		res := AjaxReponse{
+			Success: false,
+			Errors:  []string{"Kunne ikke validerer dataen"},
+		}
+		resJson, _ := json.Marshal(res)
+		fmt.Fprintf(w, string(resJson))
+		return
+	}
+
+	details := UserDetails{
+		Firstname: req.Firstname,
+		Surname:   req.Surname,
+		Email:     req.Email,
+	}
+
+	o.UserSignup(req.Mobile, details)
+
+	res := AjaxReponse{
+		Success: true,
+		Errors:  []string{},
+	}
+	resJson, _ := json.Marshal(res)
+	fmt.Fprintf(w, string(resJson))
+	return
 }
 
 func (o *ordjagt) ajaxRedirectTo(w http.ResponseWriter, r *http.Request) {

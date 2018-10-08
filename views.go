@@ -10,6 +10,11 @@ type viewsTryAgain struct {
 	Score          int
 	PersonalRecord int
 	TriesLeft      int
+	ShowSignup     bool
+}
+
+type viewsSignup struct {
+	Mobile string
 }
 
 type viewsHighscore struct {
@@ -46,7 +51,7 @@ func (o *ordjagt) viewsTryAgain(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get user
-	user := o.GetUser(req.Mobile)
+	user := o.UserGet(req.Mobile)
 
 	triesleft := user.TriesLeft
 	score := 0
@@ -61,13 +66,40 @@ func (o *ordjagt) viewsTryAgain(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	showSignup := !user.SignedUp
 	data := viewsTryAgain{
 		Score:          score,
 		PersonalRecord: personalrecord,
 		TriesLeft:      triesleft,
+		ShowSignup:     showSignup,
 	}
 
 	o.viewsTryAgainTmpl.Execute(w, data)
+}
+
+func (o *ordjagt) viewsSignup(w http.ResponseWriter, r *http.Request) {
+	log.Debug().Msg("view.signup")
+	if err := r.ParseForm(); err != nil {
+		log.Error().
+			Err(err).
+			Msg("view.signup: could not ParseForm")
+	}
+
+	var req DefaultGet
+	if err := decoder.Decode(&req, r.Form); err != nil {
+		log.Error().
+			Err(err).
+			Msg("view.signup: could not decode form")
+	}
+
+	// get user
+	user := o.UserGet(req.Mobile)
+
+	data := viewsSignup{
+		Mobile: user.Userid,
+	}
+
+	o.viewsSignupTmpl.Execute(w, data)
 }
 
 func (o *ordjagt) viewsGame(w http.ResponseWriter, r *http.Request) {

@@ -421,12 +421,30 @@ function submitSignupForm() {
             beforeSend: function() {
                 initLoader();
             }
-        }).success(function(data) {
+        }).done(function(data) {
             
             removeLoader();
+
+            if (data["success"] === undefined) {
+                removeLoader();
+                initPage("try_again");
+                return;
+            }
+
+            if (data["success"] == false) {
+                msgs = ""
+
+                for(i = 0; i < data.errors.length; i++) {
+                    msgs += data.errors[i]+"\n";
+                }
+                alert(msgs);
+                return;
+            }
             
-            initPage("thank_you");
-            
+            // initPage("thank_you");
+            initPage("highscore");
+        }).always(function() {
+            removeLoader()
         });
         
     }
