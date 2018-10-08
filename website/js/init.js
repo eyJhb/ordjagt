@@ -407,7 +407,16 @@ function submitSignupForm() {
         var form = document.signupForm;
         
         $.ajax({
-            url: "/ajax/save_main_competition.php?mobile=" + form.mobile.value + "&firstname=" + form.firstname.value + "&surname=" + form.surname.value + "&email=" + form.email.value,
+            url: "/ajax/save_main_competition.php",
+            method: 'POST',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                mobile: form.mobile.value,
+                firstname: form.firstname.value,
+                surname: form.surname.value,
+                email: form.email.value,
+            }),
             cache: false,
             beforeSend: function() {
                 initLoader();

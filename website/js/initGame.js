@@ -47,16 +47,19 @@ function preloadGame() {
     	    $.ajax({
                 url: post_url,
                 method: 'POST',
-                data: {
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
 					mobile: localStorage.ordjagtMobile,
 					score: score,
 					w: guessed_words,
 					sd: game_seed,
 					sh: security_hash.toString(CryptoJS.enc.Hex)
-                },
+                }),
                 cache: false
             }).success(function(data) {
-                initPage(data);
+                console.log(data);
+                initPage(data["page"]);
             });
     	    
 	    };
