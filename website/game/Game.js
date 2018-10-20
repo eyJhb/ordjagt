@@ -15,8 +15,7 @@ WU.Game.prototype = {
         goldLetterBonus = 1.5;
         
         // Game time (in seconds)
-        // gameTime = 120;
-        gameTime = 4;
+        gameTime = 120;
         
         // Time penalty for invalid word (in seconds)
         timePenalty = 10;
@@ -87,7 +86,7 @@ WU.Game.prototype = {
         
         // Runtimes
         f = 0;
-        score = 99999;
+        score = 0;
         currentWord = '';
         currentGold = 0;
         letterCount = 0;
