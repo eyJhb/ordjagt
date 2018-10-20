@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/base64"
 	"html/template"
 	"net/http"
 	"os"
@@ -19,9 +20,10 @@ type OrdjagtConfig struct {
 }
 
 type ordjagt struct {
-	Conf       *OrdjagtConfig
-	ScoreBoard map[int]*Score
-	Users      map[string]*User
+	Conf          *OrdjagtConfig
+	ScoreBoard    map[int]*Score
+	Users         map[string]*User
+	EncryptionKey string
 
 	viewsIndexTmpl       *template.Template
 	viewsHowToPlayTmpl   *template.Template
@@ -48,6 +50,9 @@ func (o *ordjagt) Run() {
 }
 
 func New(conf OrdjagtConfig) (*ordjagt, error) {
+	encKey, _ := base64.StdEncoding.DecodeString(conf.EncryptionKey)
+	log.Debug().Str("encKey", string(encKey[:])).Msg("test")
+
 	s := &ordjagt{
 		Conf: &conf,
 		ScoreBoard: map[int]*Score{
@@ -63,6 +68,7 @@ func New(conf OrdjagtConfig) (*ordjagt, error) {
 			9: {Name: "-", Score: 0},
 		},
 		Users:                map[string]*User{},
+		EncryptionKey:        string(encKey[:]),
 		viewsIndexTmpl:       template.Must(template.ParseFiles("./website/index.html")),
 		viewsHowToPlayTmpl:   template.Must(template.ParseFiles("./website/views/how_to_play.php")),
 		viewsTryAgainTmpl:    template.Must(template.ParseFiles("./website/views/try_again.php")),
@@ -73,7 +79,6 @@ func New(conf OrdjagtConfig) (*ordjagt, error) {
 	}
 
 	r := mux.NewRouter()
-	// serveStatic(r, "./website/ajax", "/ajax/")
 
 	r.HandleFunc("/", s.viewsIndex)
 	r.HandleFunc("/ajax/save_mobile.php", s.ajaxSaveMobile)
@@ -93,7 +98,6 @@ func New(conf OrdjagtConfig) (*ordjagt, error) {
 	serveStatic(r, "./website/game", "/game/")
 	serveStatic(r, "./website/images", "/images/")
 	serveStatic(r, "./website/js", "/js/")
-	// serveStatic(r, "./website/views", "/views/")
 
 	http.Handle("/", r)
 	return s, nil
@@ -105,7 +109,7 @@ func main() {
 
 	conf := OrdjagtConfig{
 		Name:          "test",
-		EncryptionKey: "key",
+		EncryptionKey: "WUFXamZ3WUM5aG41V1IqSSt6dzkqcld+PVdCfUMjLiMhNDtOTyYjNVkrNCtMYkk3KDV2W3s7dEB5VkNNbjUsOTZucmFfIXE5P2VHYnRS",
 	}
 	s, _ := New(conf)
 	s.Run()

@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/rs/zerolog/log"
+	"github.com/satori/go.uuid"
 )
 
 type viewsTryAgain struct {
@@ -104,9 +105,27 @@ func (o *ordjagt) viewsSignup(w http.ResponseWriter, r *http.Request) {
 
 func (o *ordjagt) viewsGame(w http.ResponseWriter, r *http.Request) {
 	log.Debug().Msg("view.game")
+	if err := r.ParseForm(); err != nil {
+		log.Error().
+			Err(err).
+			Msg("view.viesGame: could not ParseForm")
+	}
+
+	var req DefaultGet
+	if err := decoder.Decode(&req, r.Form); err != nil {
+		log.Error().
+			Err(err).
+			Msg("view.viewsGame: could not decode form")
+	}
+
+	// get user
+	user := o.UserGet(req.Mobile)
+
+	firstPart := calcsha1(user.Userid)[0:10]
+	secPart := calcsha1(uuid.Must(uuid.NewV4()).String())
 
 	data := viewsGame{
-		Seed: "d07bc074d5#e8e4edf4e0931e2a747b3606fe41e8e40d451d07",
+		Seed: firstPart + "#" + secPart,
 	}
 
 	o.viewsGameTmpl.Execute(w, data)
