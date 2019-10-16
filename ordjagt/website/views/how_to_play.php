@@ -17,5 +17,5 @@
         SE PRÆMIER HER
     </div>
             <input class="button" type="button" value="START SPIL" onclick="initPage('game')" />
-            <input class="button" type="button" value="VEJLEDNING" onclick="initPage('tutorial1');" />
+            <!-- <input class="button" type="button" value="VEJLEDNING" onclick="initPage('tutorial1');" /> -->
 </div>

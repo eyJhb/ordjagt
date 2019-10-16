@@ -1,10 +1,10 @@
-package main
+package ordjagt
 
 import (
 	"net/http"
 
 	"github.com/rs/zerolog/log"
-	"github.com/satori/go.uuid"
+	uuid "github.com/satori/go.uuid"
 )
 
 type viewsTryAgain struct {
@@ -29,6 +29,11 @@ type viewsGame struct {
 func (o *ordjagt) viewsIndex(w http.ResponseWriter, r *http.Request) {
 	log.Debug().Msg("view.index")
 	o.viewsIndexTmpl.Execute(w, "")
+}
+
+func (o *ordjagt) viewsPrices(w http.ResponseWriter, r *http.Request) {
+	log.Debug().Msg("prices.index")
+	o.viewsPricesTmpl.Execute(w, "")
 }
 
 type DefaultGet struct {

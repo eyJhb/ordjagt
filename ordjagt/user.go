@@ -1,4 +1,4 @@
-package main
+package ordjagt
 
 import (
 	"errors"
@@ -51,7 +51,7 @@ func (o *ordjagt) UserGet(userid string) *User {
 			Userid:    userid,
 			Scores:    []int{},
 			Details:   &UserDetails{},
-			TriesLeft: 3,
+			TriesLeft: 30,
 			SignedUp:  false,
 		}
 		o.Users[userid] = user
@@ -104,6 +104,7 @@ func (o *ordjagt) UserAddHighscore(userid string, score int) {
 	user := o.UserGet(userid)
 	// only append if user is signed up
 	if !user.SignedUp {
+		log.Debug().Msg("UserAddHighscore - not signed up")
 		return
 	}
 

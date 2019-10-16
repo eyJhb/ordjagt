@@ -1,4 +1,4 @@
-package main
+package ordjagt
 
 import (
 	"encoding/json"
@@ -92,7 +92,9 @@ func (o *ordjagt) ajaxGameOver(w http.ResponseWriter, r *http.Request) {
 
 	// validate our main security-hash
 	sh := req.Userid + strconv.Itoa(req.Score) + strconv.Itoa(len(req.Words)) + req.GameSeed + o.EncryptionKey
+	fmt.Printf("'%s'\n", sh)
 	shSha1 := calcsha1(sh)
+	fmt.Println(shSha1)
 
 	if shSha1 != req.Hash {
 		log.Error().
