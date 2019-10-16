@@ -51,7 +51,7 @@ func (o *ordjagt) UserGet(userid string) *User {
 			Userid:    userid,
 			Scores:    []int{},
 			Details:   &UserDetails{},
-			TriesLeft: 30,
+			TriesLeft: 3,
 			SignedUp:  false,
 		}
 		o.Users[userid] = user
