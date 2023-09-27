@@ -2,6 +2,7 @@ package ordjagt
 
 import (
 	"encoding/base64"
+	"fmt"
 	"html/template"
 	"net/http"
 
@@ -15,6 +16,8 @@ var decoder = schema.NewDecoder()
 type OrdjagtConfig struct {
 	Name          string
 	EncryptionKey string
+	BindAddress   string
+	Port          int
 }
 
 type ordjagt struct {
@@ -45,7 +48,7 @@ func serveStatic(r *mux.Router, dir, path string) {
 
 func (o *ordjagt) Run() {
 	log.Debug().Msg("Running ordjagt!")
-	http.ListenAndServe(":5000", nil)
+	http.ListenAndServe(fmt.Sprintf("%s:%d", o.Conf.BindAddress, o.Conf.Port), nil)
 }
 
 func New(conf OrdjagtConfig) (*ordjagt, error) {

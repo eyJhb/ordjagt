@@ -3,8 +3,8 @@ package ordjagt
 import (
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/rs/zerolog/log"
-	uuid "github.com/satori/go.uuid"
 )
 
 type viewsTryAgain struct {
@@ -127,7 +127,7 @@ func (o *ordjagt) viewsGame(w http.ResponseWriter, r *http.Request) {
 	user := o.UserGet(req.Mobile)
 
 	firstPart := calcsha1(user.Userid)[0:10]
-	secPart := calcsha1(uuid.Must(uuid.NewV4()).String())
+	secPart := calcsha1(uuid.Must(uuid.NewRandom()).String())
 
 	data := viewsGame{
 		Seed: firstPart + "#" + secPart,
